@@ -12,15 +12,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
-import java.io.FilterReader;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.Random;
-import java.util.stream.Stream;
 
 /**
  * This class is a simple application that writes a random number on a file.
@@ -79,19 +75,17 @@ public class BadIOGUI {
         read.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(ActionEvent arg0) {
+            public void actionPerformed(final ActionEvent arg0) {
                 try {
-                    try (BufferedReader br = new BufferedReader(new FileReader(PATH))) {
-                        String content = br.readLine();
-                        System.out.println(content);
+                    try (BufferedReader br = new BufferedReader(new FileReader(PATH, StandardCharsets.UTF_8))) {
+                        final String content = br.readLine();
+                        System.out.println(content); //NOPMD: allowed as this is just an exercise
                     }
                 } catch (IOException e) {
                     JOptionPane.showMessageDialog(frame, e, "Error", JOptionPane.ERROR_MESSAGE);
                     e.printStackTrace(); // NOPMD: allowed as this is just an exercise
                 }
-                
             }
-            
         });
     }
 
